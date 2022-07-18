@@ -203,10 +203,12 @@ class RegisterPageViewController: UIViewController {
         self.view.endEditing(true)
     }
 
-    @objc func keyboardWillShow(notifiation: NSNotification,scrollView: UIScrollView){
-        if let keyboardFrame: NSValue = notifiation.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+    @objc func keyboardWillShow(notifiation: NSNotification){
+        if let keyboardFrame: NSValue = notifiation.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue{
+            
             
             let keyboardHeight = keyboardFrame.cgRectValue.height
+//            let keyboardAppear = view.convert(keyboardHeight,from: view.window)
             let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
                scrollView.contentInset = insets
                scrollView.scrollIndicatorInsets = insets
@@ -214,7 +216,8 @@ class RegisterPageViewController: UIViewController {
     }
 
     @objc func keyboardWillHide(){
-        self.view.frame.origin.y = 0
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
 }
 
